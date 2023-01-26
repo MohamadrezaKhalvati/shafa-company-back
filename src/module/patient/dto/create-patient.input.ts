@@ -33,6 +33,11 @@ class CreatPatientData {
     patient_birthday : string
 
 
+    @ApiProperty()
+    @IsNumberString()
+    patient_phone_number : string
+
+
 }
 
 export default class CreatePatientInput {
