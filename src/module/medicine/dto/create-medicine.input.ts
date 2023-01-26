@@ -35,7 +35,7 @@ class CreateMedicineData {
 
 }
 
-export default class CreateMedicieInput {
+export default class CreateMedicineInput {
 
     @ApiProperty({ type: CreateMedicineData })
     @Type(() => CreateMedicineData)

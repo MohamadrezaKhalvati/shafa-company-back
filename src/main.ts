@@ -30,9 +30,6 @@ function setupSwagger(app: INestApplication) {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  // app.use('/api-doc', (_, res: ServerResponse) =>
-  // 	res.end(JSON.stringify(document)),
-  // )
   return document;
 }
 
