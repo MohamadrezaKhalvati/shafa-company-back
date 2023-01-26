@@ -1,8 +1,17 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Type } from "class-transformer";
-import { ValidateNested } from "class-validator";
+import { IsString, ValidateNested } from "class-validator";
 
 class CreatCompanyData{
+
+    @ApiProperty()
+    @IsString()
+    complications_disese_name : string
+
+
+    @ApiProperty()
+    @IsString()
+    complications_duration : string
 
 }
 
