@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { Type } from "class-transformer";
 import { IsNumber, IsNumberString, IsString, ValidateNested } from "class-validator";
 
-class CreataPatientData {
+class CreatPatientData {
 
     @ApiProperty()
     @IsString()
@@ -36,10 +36,10 @@ class CreataPatientData {
 }
 
 export default class CreatePatientInput {
-    @ApiProperty({ type: CreataPatientData })
-    @Type(() => CreataPatientData)
+    @ApiProperty({ type: CreatPatientData })
+    @Type(() => CreatPatientData)
     @ValidateNested()
-    Data: CreataPatientData
+    Data: CreatPatientData
 
 }
 
