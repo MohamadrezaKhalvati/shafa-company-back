@@ -4,7 +4,7 @@ import { IsNumber, IsOptional, IsString, ValidateNested } from "class-validator"
 import { PaginationData } from "src/common/input/pagination.input";
 import { SortByData } from "src/common/input/sort-by.input";
 
-class ReadCompanyData{
+class ReadComplicationsData{
 
 
     @ApiPropertyOptional()
@@ -31,22 +31,22 @@ class ReadCompanyData{
 
 }
 
-export default class ReadCompanyDataInput {
+export default class ReadComplicationsDataInput {
     @ApiPropertyOptional()
     @IsOptional()
     @Type(() => PaginationData)
     @ValidateNested()
-    pagination: PaginationData;
+    pagination ? : PaginationData;
   
     @ApiPropertyOptional()
     @IsOptional()
     @Type(() => SortByData)
-    sortBy: SortByData;
+    sortBy ? : SortByData;
   
     @ApiPropertyOptional()
     @IsOptional()
-    @Type(() => ReadCompanyData)
+    @Type(() => ReadComplicationsData)
     @ValidateNested()
-    data: ReadCompanyData;
+    data ?: ReadComplicationsData;
   }
   

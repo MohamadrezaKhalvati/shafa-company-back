@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { Type } from "class-transformer";
 import { IsString, ValidateNested } from "class-validator";
 
-class CreatCompanyData{
+class CreatComplicationsData{
 
     @ApiProperty()
     @IsString()
@@ -17,8 +17,8 @@ class CreatCompanyData{
 
 export default class CreateComplicationsInput {
 
-    @ApiProperty({ type: CreatCompanyData})
-    @Type(() => CreatCompanyData)
+    @ApiProperty({ type: CreatComplicationsData})
+    @Type(() => CreatComplicationsData)
     @ValidateNested()
-    Data: CreatCompanyData
+    Data: CreatComplicationsData
 }

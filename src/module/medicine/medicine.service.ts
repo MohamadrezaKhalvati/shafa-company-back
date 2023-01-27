@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { createPaginationResult } from 'src/common/input/pagination.input';
+import { DbConnection } from 'src/dbConnection/DB-connection';
 import { PrismaService } from '../prisma/prisma.service';
 import CreateMedicineInput from './dto/create-medicine.input';
-import ReadMedicieInput from './dto/read-medicine.input';
-
-
+import ReadMedicieInput from './dto/read-medicine.input'
 
 
 @Injectable()
 export class MedicineService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService ) {}
+
 
   async createMedicine(input: CreateMedicineInput) {
     console.log(input);
@@ -23,9 +23,11 @@ export class MedicineService {
       data : {
         medicine_name : Data.medicine_name,
         medicine_adminstration : Data.medicine_adminstration,
-        medicine_age_limit : Data.medicine_age_limit
+        medicine_age_limit : Data.medicine_age_limit ,
+        
       }
-    })
+    }
+    )
 
     return medicien
 
@@ -60,6 +62,10 @@ export class MedicineService {
 
 
 
+  // async createTest(input : any ){
 
+  //  const  medicine_content =  await this.dbConnection.getConnection().qury("SELECT * FROM medicine_content")
+  // return medicine_content
+  // }
 
 }

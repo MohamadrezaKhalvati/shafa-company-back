@@ -14,4 +14,20 @@ export class MedicineController {
   async createMedicine(@Body() input: CreateMedicieInput) {
     return await this.medicineService.createMedicine(input);
   }
+
+
+
+
+  // @Post("cerateMedicineWithContent")
+  // // @ApiBody({type : any})
+  // @ApiResponse({ status: 200 })
+  // async addMedicine(@Body() input:any) {
+  //   console.log('ok 1');
+    
+  //     return this.medicineService.createTest(input);
+  // }
+
+
+
+
 }

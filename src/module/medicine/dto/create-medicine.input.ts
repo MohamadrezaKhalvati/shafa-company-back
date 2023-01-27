@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger"
 import { Type } from "class-transformer"
-import { IsNumber, IsString, ValidateNested } from "class-validator"
+import { IsArray, IsJSON, isJSON, IsNumber, IsString, ValidateNested } from "class-validator"
 
 class CreateMedicineData {
 
@@ -28,9 +28,9 @@ class CreateMedicineData {
     @IsNumber()
     id_company ?: number
 
-
-
-
+    @ApiPropertyOptional()
+    // @IsString()
+    medicine_content ?: any
 
 
 }

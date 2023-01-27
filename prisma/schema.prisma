@@ -89,7 +89,7 @@ model medicine {
   medicine_age_limit                        String                                      @db.VarChar(45)
   id_company                                Int?
   pharmaceuticalcompany                     pharmaceuticalcompany?                      @relation(fields: [id_company], references: [id_PharmaceuticalCompany], onDelete: NoAction, onUpdate: NoAction, map: "id_pharmcom")
-  medicine_content                          medicine_content[]                          @ignore
+  medicine_content                          medicine_content[]
   medicine_have_complications_by_pharamcy   medicine_have_complications_by_pharamcy[]   @ignore
   medicine_production_pharmaceuticalcompany medicine_production_pharmaceuticalcompany[]
   order_medicine                            order_medicine[]
@@ -99,14 +99,13 @@ model medicine {
   @@index([id_company], map: "id_pharmcom_idx")
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 model medicine_content {
   value       String    @db.MediumText
   id_medicene Int?
+  pk_id       Int       @id
   medicine    medicine? @relation(fields: [id_medicene], references: [id_medicine], onDelete: Cascade, onUpdate: NoAction, map: "id_medicine")
 
   @@index([id_medicene], map: "id_medicine_idx")
-  @@ignore
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.

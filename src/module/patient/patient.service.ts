@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
+import { createPaginationResult } from 'src/common/input/pagination.input';
 import { PrismaService } from '../prisma/prisma.service';
 import CreatePatientInput from './dto/create-patient.input';
+import ReadPatientInput from './dto/read-patient.input';
 
 @Injectable()
 export class PatientService {
@@ -24,4 +27,34 @@ export class PatientService {
     })
     return patient
   }
+
+
+  
+  async readPatient(input : ReadPatientInput){
+    const rawWhere = input.Data || {};
+      
+    let whereClause: Prisma.patientWhereInput = {
+      id_patient : rawWhere.id_patient ,
+      patient_name : rawWhere.patient_name,
+      patient_last_name : rawWhere.patient_last_name , 
+      patient_age : rawWhere.patient_age ,
+      patient_birthday : rawWhere.patient_birthday , 
+      patient_blood_type : rawWhere.patient_blood_type ,
+      patient_gender : rawWhere.patient_gender , 
+
+    };
+  
+    // whereClause = cleanDeep(whereClause);
+  
+    const count = this.prisma.patient.count({ where: whereClause });
+    const entity = this.prisma.patient.findMany({
+        where: whereClause,
+        ...input?.sortBy?.convertToPrismaFilter(),
+        ...input?.pagination?.convertToPrismaFilter(),
+    });
+    return createPaginationResult({ count, entity });
+  }
+
+
+
 }
