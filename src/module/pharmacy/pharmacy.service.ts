@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { createPaginationResult } from 'src/common/input/pagination.input';
 import { PrismaService } from '../prisma/prisma.service';
+import CreatPharmacyInput from './dto/creat-pharmacy.input';
 import ReadPharmacyInput from './dto/read-pharmacy.input';
 
 @Injectable()
@@ -34,6 +35,23 @@ export class PharmacyService {
 
   }
 
+
+
+  async createPharmacy(input : CreatPharmacyInput){
+
+    const {Data} = input;
+
+    const pharmacy =  await this.prisma.pharmacy.create({
+      data : {
+        pharmacy_name : Data.pharmacy_name , 
+        pharmacy_established_year : Data.pharmacy_established_year , 
+        pharmacy_address : Data.pharmacy_address , 
+        pharmacy_branch : Data.pharmacy_branch , 
+        pharmacy_phone_number : Data.pharmacy_phone_number}
+    });
+
+    return pharmacy
+  }
 
 
 

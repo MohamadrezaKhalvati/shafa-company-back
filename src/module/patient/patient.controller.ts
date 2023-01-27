@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import CreatePatientInput from './dto/create-patient.input';
 import ReadPatientInput from './dto/read-patient.input';
@@ -17,7 +17,7 @@ export class PatientController {
   }
 
 
-  @Post('raedPatient')
+  @Get('raedPatient')
   @ApiOperation({ operationId: 'readPatient' })
   @ApiBody({ type: ReadPatientInput })
   @ApiResponse({ status: 200 })

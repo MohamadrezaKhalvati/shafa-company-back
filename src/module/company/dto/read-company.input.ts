@@ -34,16 +34,16 @@ export default class ReadCompanyInput {
   @IsOptional()
   @Type(() => PaginationData)
   @ValidateNested()
-  pagination: PaginationData;
+  pagination ? : PaginationData;
 
   @ApiPropertyOptional()
   @IsOptional()
   @Type(() => SortByData)
-  sortBy: SortByData;
+  sortBy ? : SortByData;
 
   @ApiPropertyOptional()
   @IsOptional()
   @Type(() => ReadCompanyData)
   @ValidateNested()
-  data: ReadCompanyData;
+  data ? : ReadCompanyData;
 }

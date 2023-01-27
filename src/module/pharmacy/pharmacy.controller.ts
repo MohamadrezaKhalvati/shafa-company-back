@@ -1,5 +1,6 @@
-import { Body, Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import CreatPharmacyInput from './dto/creat-pharmacy.input';
 import ReadPharmacyInput from './dto/read-pharmacy.input';
 import { PharmacyService } from './pharmacy.service';
 
@@ -14,4 +15,15 @@ export class PharmacyController {
   async readPharmacy(@Body() input: ReadPharmacyInput) {
     return await this.pharmacyService.readPharmacy(input);
   }
+
+
+  @Post('creatPharmacy')
+  @ApiOperation({ operationId: 'creatPharmacy' })
+  @ApiBody({ type: CreatPharmacyInput })
+  @ApiResponse({ status: 200 })
+  async creatPharmacy(@Body() input: CreatPharmacyInput) {
+    return await this.pharmacyService.createPharmacy(input);
+  }
+
+
 }
