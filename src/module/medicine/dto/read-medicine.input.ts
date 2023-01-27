@@ -42,17 +42,17 @@ export default class ReadMedicieInput {
     @IsOptional()
     @Type(() => PaginationData)
     @ValidateNested()
-    pagination: PaginationData;
+    pagination ? : PaginationData;
   
     @ApiPropertyOptional()
     @IsOptional()
     @Type(() => SortByData)
-    sortBy: SortByData;
+    sortBy ? : SortByData;
 
     @ApiProperty({ type: ReadMedicineData })
     @Type(() => ReadMedicineData)
     @ValidateNested()
-    Data: ReadMedicineData
+    Data ? : ReadMedicineData
 }
 
 

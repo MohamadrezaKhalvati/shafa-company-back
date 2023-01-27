@@ -16,7 +16,7 @@ class ReadPharmacyData {
 
   @ApiPropertyOptional()
   @IsString()
-  pharmacy_established_year : string
+  pharmacy_established_year ?: string
 
   @ApiPropertyOptional()
   @IsString()

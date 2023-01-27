@@ -8,12 +8,12 @@ import ReadCompanyInput from './dto/read-company.input';
 export class CompanyController {
   constructor(private companyService: CompanyService) {}
 
-  @Get('readCompany')
+  @Post('readCompany')
   @ApiOperation({ operationId: 'readCompany' })
   @ApiBody({ type: ReadCompanyInput })
   @ApiResponse({ status: 200 })
   async readCompany(@Body() input: ReadCompanyInput) {
-    this.companyService.readCompany(input);
+    return this.companyService.readCompany(input);
   }
 
 

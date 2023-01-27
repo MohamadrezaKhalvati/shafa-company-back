@@ -1,4 +1,4 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { ComplicationsService } from './complications.service';
 import CreateComplicationsInput from './dto/creat-complications.input';
@@ -7,12 +7,16 @@ import ReadComplicationsDataInput from './dto/read-complications.input';
 @Controller('complications')
 export class ComplicationsController {
     constructor(private complicationsService : ComplicationsService){}
-    @Get('readcomplications')
+
+
+    @Post('readcomplications')
     @ApiOperation({ operationId: 'readcomplications' })
     @ApiBody({ type: ReadComplicationsDataInput })
     @ApiResponse({ status: 200 })
-    async readComplications (input : ReadComplicationsDataInput){
-        await this.complicationsService.readComplications(input)
+    async readComplications (@Body()input : ReadComplicationsDataInput){
+        console.log(input);
+        
+       return await this.complicationsService.readComplications(input)
     }
 
 
@@ -22,7 +26,7 @@ export class ComplicationsController {
     @ApiOperation({ operationId: 'creatcomplications' })
     @ApiBody({ type: CreateComplicationsInput })
     @ApiResponse({ status: 200 })
-    async craetComplications (input : CreateComplicationsInput){
+    async craetComplications (@Body()input : CreateComplicationsInput){
         await this.complicationsService.creatComplication(input)
     }
 

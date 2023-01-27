@@ -9,11 +9,12 @@ export class SuggestionService {
   constructor(private prisma: PrismaService) {}
 
   async readSuggestion(input: ReadSuggestionInput) {
+    const data = input.data ||{};
     
     let whereClause: Prisma.suggestionsWhereInput = {
-      suggestions_topic : input.data.suggestion_topic || {},
-      suggestion_value : input.data.suggestion_value  || {},
-      suggestions_date  : input.data.suggestion_date  || {},
+      suggestions_topic : data.suggestion_topic || {},
+      suggestion_value : data.suggestion_value  || {},
+      suggestions_date  : data.suggestion_date  || {},
 
 
    };

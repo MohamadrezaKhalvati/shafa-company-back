@@ -47,6 +47,6 @@ export class CompanyService {
         PharmaceuticalCompany_location : data.pharmaceuticalCompany_locadtion
       }
     })
-    
+    return company
   }
 }

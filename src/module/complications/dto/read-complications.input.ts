@@ -13,6 +13,10 @@ class ReadComplicationsData{
     
     
     @ApiPropertyOptional()
+    @IsNumber()
+    id_pharmaceuticalcompany ? : number
+    
+    @ApiPropertyOptional()
     @IsString()
     complications_disese_name ? : string
     
@@ -21,10 +25,6 @@ class ReadComplicationsData{
     @IsString()
     complications_duration ?: string
 
-    
-    @ApiPropertyOptional()
-    @IsNumber()
-    id_pharmaceuticalcompany ? : number
 
 
 

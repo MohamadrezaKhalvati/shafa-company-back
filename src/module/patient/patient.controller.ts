@@ -17,7 +17,7 @@ export class PatientController {
   }
 
 
-  @Get('raedPatient')
+  @Post('raedPatient')
   @ApiOperation({ operationId: 'readPatient' })
   @ApiBody({ type: ReadPatientInput })
   @ApiResponse({ status: 200 })

@@ -8,11 +8,13 @@ import { PharmacyService } from './pharmacy.service';
 export class PharmacyController {
   constructor(private pharmacyService: PharmacyService) {}
 
-  @Get('readPharmacy')
+  @Post('readPharmacy')
   @ApiOperation({ operationId: 'readPharmacy' })
   @ApiBody({ type: ReadPharmacyInput })
   @ApiResponse({ status: 200 })
   async readPharmacy(@Body() input: ReadPharmacyInput) {
+    console.log(input);
+    
     return await this.pharmacyService.readPharmacy(input);
   }
 

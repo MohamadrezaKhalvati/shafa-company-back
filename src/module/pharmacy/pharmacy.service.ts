@@ -10,17 +10,16 @@ export class PharmacyService {
   constructor(private prisma: PrismaService) {}
 
   async readPharmacy(input: ReadPharmacyInput) {
-
+    const Data = input.Data ||{};
+    console.log(Data);
+    
     let whereClause: Prisma.pharmacyWhereInput = {
-
-       id_pharmacy: input.Data.id_pharmacy || {} ,
-       pharmacy_name : input.Data.pharmacy_name || {},
-       pharmacy_address : input.Data.pharmacy_address || {} ,
-       pharmacy_branch : input.Data.pharmacy_branch || {} ,
-       pharmacy_established_year: input.Data.pharmacy_established_year || {},
-       pharmacy_phone_number : input.Data.pharmacy_phone_number || {}
-
-
+       id_pharmacy: Data.id_pharmacy ,
+       pharmacy_name : Data.pharmacy_name ,
+       pharmacy_address : Data.pharmacy_address  ,
+       pharmacy_branch : Data.pharmacy_branch  ,
+       pharmacy_established_year: Data.pharmacy_established_year ,
+       pharmacy_phone_number : Data.pharmacy_phone_number 
     };
   
     // whereClause = cleanDeep(whereClause);

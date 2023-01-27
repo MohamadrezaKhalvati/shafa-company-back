@@ -20,7 +20,6 @@ async creatComplication(input:CreateComplicationsInput){
         data:{
             complications_disease_name : Data.complications_disese_name ,
             complications_duration:Data.complications_duration,
-
         }
     })
     return complications
@@ -29,10 +28,14 @@ async creatComplication(input:CreateComplicationsInput){
 
 
 async readComplications(input:ReadComplicationsDataInput){
+    console.log(input);
+    
 
     const rawWhere = input.data ||{};
 
-    let whereClause : Prisma.complicationsWhereInput= {
+    let whereClause : Prisma.complicationsWhereInput = {
+        id_complications : rawWhere.id_complications,
+        id_pharmaceuticalcompany : rawWhere.id_pharmaceuticalcompany,
         complications_disease_name : rawWhere.complications_disese_name,
         complications_duration : rawWhere.complications_duration,
         

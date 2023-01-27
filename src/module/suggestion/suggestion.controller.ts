@@ -1,4 +1,4 @@
-import { Body, Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import ReadSuggestionInput from './dto/read-suggestion.input';
 import { SuggestionService } from './suggestion.service';
@@ -7,7 +7,7 @@ import { SuggestionService } from './suggestion.service';
 export class SuggestionController {
   constructor(private suggestionService: SuggestionService) {}
 
-  @Get('readSuggestion')
+  @Post('readSuggestion')
   @ApiOperation({ operationId: 'readSuggestion' })
   @ApiBody({ type: ReadSuggestionInput })
   @ApiResponse({ status: 200 })

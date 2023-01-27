@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { createPaginationResult } from 'src/common/input/pagination.input';
-import { DbConnection } from 'src/dbConnection/DB-connection';
 import { PrismaService } from '../prisma/prisma.service';
 import CreateMedicineInput from './dto/create-medicine.input';
 import ReadMedicieInput from './dto/read-medicine.input'
