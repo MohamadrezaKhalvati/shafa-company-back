@@ -16,17 +16,10 @@ export class MedicineController {
     await this.medicineService.createMedicine(input);
   }
 
-
-
-
-  @Post("readMedicine")
-  @ApiBody({type : ReadMedicieInput})
+  @Post('readMedicine')
+  @ApiBody({ type: ReadMedicieInput })
   @ApiResponse({ status: 200 })
-  async addMedicine(@Body() input: ReadMedicieInput) {
-      return this.medicineService.readMedicien(input);
+  async readMedicine(@Body() input: ReadMedicieInput) {
+    return this.medicineService.readMedicine(input);
   }
-
-
-
-
 }

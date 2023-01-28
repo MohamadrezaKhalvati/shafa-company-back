@@ -12,6 +12,6 @@ export class OrderController {
   @ApiBody({ type: ReadOrderInput })
   @ApiResponse({ status: 200 })
   async readOrder(@Body() input: ReadOrderInput) {
-    return await this.orderService.readOrder(input);
+    // return await this.orderService.readOrder(input);
   }
 }

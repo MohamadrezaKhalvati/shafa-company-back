@@ -5,6 +5,7 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ServerResponse } from 'http';
 import { AppModule } from './app.module';
 
 export async function bootstrap() {

@@ -1,32 +1,40 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsNumber, IsOptional, IsString, isString, ValidateNested } from 'class-validator';
+import {
+  IsDateString,
+  IsNumber,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
 import { PaginationData } from 'src/common/input/pagination.input';
 import { SortByData } from 'src/common/input/sort-by.input';
 
 class ReadCompanyData {
-
-
   @ApiPropertyOptional()
+  @IsOptional()
   @IsNumber()
-  id_pharmaceuticalCompany ?: number
+  id_pharmaceuticalCompany?: number;
 
   @ApiPropertyOptional()
+  @IsOptional()
   @IsString()
-  pharmaceuticalCompany_name ?: string
+  pharmaceuticalCompany_name?: string;
 
   @ApiPropertyOptional()
-  @IsString()
-  pharmaceuticalCompany_established_year ?: string
+  @IsOptional()
+  @IsDateString()
+  pharmaceuticalCompany_established_year?: Date;
 
   @ApiPropertyOptional()
+  @IsOptional()
   @IsString()
-  pharmaceuticalCompany_locadtion ?: string
+  pharmaceuticalCompany_locadtion?: string;
 
   @ApiPropertyOptional()
+  @IsOptional()
   @IsString()
-  pharmaceuticalCompany_country ?: string
-
+  pharmaceuticalCompany_country?: string;
 }
 
 export default class ReadCompanyInput {
@@ -34,16 +42,16 @@ export default class ReadCompanyInput {
   @IsOptional()
   @Type(() => PaginationData)
   @ValidateNested()
-  pagination ? : PaginationData;
+  pagination?: PaginationData;
 
   @ApiPropertyOptional()
   @IsOptional()
   @Type(() => SortByData)
-  sortBy ? : SortByData;
+  sortBy?: SortByData;
 
   @ApiPropertyOptional()
   @IsOptional()
   @Type(() => ReadCompanyData)
   @ValidateNested()
-  data ? : ReadCompanyData;
+  data?: ReadCompanyData;
 }

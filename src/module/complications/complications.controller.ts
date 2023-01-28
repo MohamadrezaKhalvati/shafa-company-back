@@ -6,30 +6,21 @@ import ReadComplicationsDataInput from './dto/read-complications.input';
 
 @Controller('complications')
 export class ComplicationsController {
-    constructor(private complicationsService : ComplicationsService){}
+  constructor(private complicationsService: ComplicationsService) {}
 
+  @Post('readcomplications')
+  @ApiOperation({ operationId: 'readcomplications' })
+  @ApiBody({ type: ReadComplicationsDataInput })
+  @ApiResponse({ status: 200 })
+  async readComplications(@Body() input: ReadComplicationsDataInput) {
+    return await this.complicationsService.readComplications(input);
+  }
 
-    @Post('readcomplications')
-    @ApiOperation({ operationId: 'readcomplications' })
-    @ApiBody({ type: ReadComplicationsDataInput })
-    @ApiResponse({ status: 200 })
-    async readComplications (@Body()input : ReadComplicationsDataInput){
-        console.log(input);
-        
-       return await this.complicationsService.readComplications(input)
-    }
-
-
-
-
-    @Post('creatcomplications')
-    @ApiOperation({ operationId: 'creatcomplications' })
-    @ApiBody({ type: CreateComplicationsInput })
-    @ApiResponse({ status: 200 })
-    async craetComplications (@Body()input : CreateComplicationsInput){
-        await this.complicationsService.creatComplication(input)
-    }
-
-
-
+  @Post('creatcomplications')
+  @ApiOperation({ operationId: 'creatcomplications' })
+  @ApiBody({ type: CreateComplicationsInput })
+  @ApiResponse({ status: 200 })
+  async craetComplications(@Body() input: CreateComplicationsInput) {
+    await this.complicationsService.creatComplication(input);
+  }
 }

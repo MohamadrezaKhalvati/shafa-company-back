@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { CompanyService } from './company.service';
-import CreatCompanyInput from './dto/creat-company.input';
+import CreatCompanyInput from './dto/create-company.input';
 import ReadCompanyInput from './dto/read-company.input';
 
 @Controller('company')
@@ -16,8 +16,7 @@ export class CompanyController {
     return this.companyService.readCompany(input);
   }
 
-
-  @Post('creatCompany')
+  @Post('createCompany')
   @ApiOperation({ operationId: 'creatCompany' })
   @ApiBody({ type: CreatCompanyInput })
   @ApiResponse({ status: 200 })

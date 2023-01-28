@@ -6,7 +6,5 @@ import ReadDeviceInput from './dto/read-device.input';
 export class DeviceService {
   constructor(private prisma: PrismaService) {}
 
-  async readDevice(input: ReadDeviceInput) {
-    console.log(input);
-  }
+  async readDevice(input: ReadDeviceInput) {}
 }

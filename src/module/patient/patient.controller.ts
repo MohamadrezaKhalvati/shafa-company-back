@@ -16,8 +16,7 @@ export class PatientController {
     return await this.patientService.createPatient(input);
   }
 
-
-  @Post('raedPatient')
+  @Post('readPatient')
   @ApiOperation({ operationId: 'readPatient' })
   @ApiBody({ type: ReadPatientInput })
   @ApiResponse({ status: 200 })

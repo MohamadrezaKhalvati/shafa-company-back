@@ -5,8 +5,4 @@ import ReadOrderInput from './dto/read-order.input';
 @Injectable()
 export class OrderService {
   constructor(private prisma: PrismaService) {}
-
-  async readOrder(input: ReadOrderInput) {
-    console.log(input);
-  }
 }

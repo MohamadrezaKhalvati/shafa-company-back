@@ -5,51 +5,37 @@ import { PrismaService } from '../prisma/prisma.service';
 import CreateComplicationsInput from './dto/creat-complications.input';
 import ReadComplicationsDataInput from './dto/read-complications.input';
 
-
 @Injectable()
 export class ComplicationsService {
+  constructor(private prisma: PrismaService) {}
 
-constructor (private prisma : PrismaService){}
-
-
-
-async creatComplication(input:CreateComplicationsInput){
-    const {Data} = input
+  async creatComplication(input: CreateComplicationsInput) {
+    const { Data } = input;
 
     const complications = this.prisma.complications.create({
-        data:{
-            complications_disease_name : Data.complications_disese_name ,
-            complications_duration:Data.complications_duration,
-        }
-    })
-    return complications
-}
+      data: {
+        complications_disease_name: Data.complications_disese_name,
+        complications_duration: Data.complications_duration,
+      },
+    });
+    return complications;
+  }
 
+  async readComplications(input: ReadComplicationsDataInput) {
+    const rawWhere = input.data || {};
 
-
-async readComplications(input:ReadComplicationsDataInput){
-    console.log(input);
-    
-
-    const rawWhere = input.data ||{};
-
-    let whereClause : Prisma.complicationsWhereInput = {
-        id_complications : rawWhere.id_complications,
-        id_pharmaceuticalcompany : rawWhere.id_pharmaceuticalcompany,
-        complications_disease_name : rawWhere.complications_disese_name,
-        complications_duration : rawWhere.complications_duration,
-        
+    const whereClause: Prisma.complicationsWhereInput = {
+      id_complications: rawWhere.id_complications,
+      id_pharmaceuticalcompany: rawWhere.id_pharmaceuticalcompany,
+      complications_disease_name: rawWhere.complications_disese_name,
+      complications_duration: rawWhere.complications_duration,
     };
     const count = this.prisma.complications.count({ where: whereClause });
     const entity = this.prisma.complications.findMany({
-        where: whereClause,
-        ...input?.sortBy?.convertToPrismaFilter(),
-        ...input?.pagination?.convertToPrismaFilter(),
+      where: whereClause,
+      ...input?.sortBy?.convertToPrismaFilter(),
+      ...input?.pagination?.convertToPrismaFilter(),
     });
     return createPaginationResult({ count, entity });
-
-    
-
-}
-
+  }
 }

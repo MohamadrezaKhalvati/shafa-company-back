@@ -1,50 +1,50 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { Type } from "class-transformer";
-import { IsNumber, IsNumberString, IsString, ValidateNested } from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
+import {
+  IsDateString,
+  IsNumber,
+  IsNumberString,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
 
 class CreatPatientData {
+  @ApiProperty()
+  @IsString()
+  patient_name: string;
 
-    @ApiProperty()
-    @IsString()
-    patient_name : string
+  @ApiProperty()
+  @IsString()
+  patient_last_name: string;
 
-    @ApiProperty()
-    @IsString()
-    patient_last_name : string 
+  @ApiProperty()
+  @IsString()
+  patient_gender: string;
 
-    @ApiProperty()
-    @IsString()
-    patient_gender : string
+  @ApiProperty()
+  @IsNumber()
+  patient_age: number;
 
-    @ApiProperty()
-    @IsNumber()
-    patient_age : number
+  @ApiProperty()
+  @IsNumberString()
+  patient_identification_id: string;
 
-    @ApiProperty()
-    @IsNumberString()
-    patient_identification_id : string
+  @ApiProperty()
+  @IsString()
+  patient_blood_type: string;
 
-    @ApiProperty()
-    @IsString()
-    patient_blood_type : string
+  @ApiProperty()
+  @IsDateString()
+  patient_birthday: Date;
 
-    @ApiProperty()
-    @IsString()
-    patient_birthday : string
-
-
-    @ApiProperty()
-    @IsNumberString()
-    patient_phone_number : string
-
-
+  @ApiProperty()
+  @IsNumberString()
+  patient_phone_number: string;
 }
 
 export default class CreatePatientInput {
-    @ApiProperty({ type: CreatPatientData })
-    @Type(() => CreatPatientData)
-    @ValidateNested()
-    Data: CreatPatientData
-
+  @ApiProperty({ type: CreatPatientData })
+  @Type(() => CreatPatientData)
+  @ValidateNested()
+  Data: CreatPatientData;
 }
-

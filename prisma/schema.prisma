@@ -172,7 +172,7 @@ model patient {
   patient_last_name          String                       @db.VarChar(64)
   patient_gender             String                       @db.VarChar(1)
   patient_age                Int
-  patient_phone_number       String                       @db.VarChar(10)
+  patient_phone_number       String                       @db.VarChar(11)
   patient_identification_id  String                       @unique(map: "patient_identification_id_UNIQUE") @db.VarChar(64)
   patient_blood_type         String                       @db.VarChar(4)
   patient_birthday           DateTime                     @db.Date
@@ -232,7 +232,7 @@ model pharmacy {
   pharmacy_established_year               DateTime                                  @db.Date
   pharmacy_address                        String                                    @db.VarChar(128)
   pharmacy_branch                         String?                                   @db.VarChar(45)
-  pharmacy_phone_number                   String?                                   @db.VarChar(10)
+  pharmacy_phone_number                   String?                                   @db.VarChar(11)
   medicine_have_complications_by_pharamcy medicine_have_complications_by_pharamcy[] @ignore
   pharmacy_medicine                       pharmacy_medicine[]
   pharmacy_supervisor_dr                  pharmacy_supervisor_dr[]
