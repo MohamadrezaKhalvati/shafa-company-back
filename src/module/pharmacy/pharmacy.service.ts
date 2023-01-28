@@ -21,8 +21,6 @@ export class PharmacyService {
       pharmacy_phone_number: Data.pharmacy_phone_number,
     };
 
-    // whereClause = cleanDeep(whereClause);
-
     const count = this.prisma.pharmacy.count({ where: whereClause });
     const entity = this.prisma.pharmacy.findMany({
       where: whereClause,

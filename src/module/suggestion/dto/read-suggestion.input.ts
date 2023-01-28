@@ -5,23 +5,20 @@ import { PaginationData } from 'src/common/input/pagination.input';
 import { SortByData } from 'src/common/input/sort-by.input';
 
 class ReadSuggestionData {
-
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  suggestion_topic?: string;
 
   @ApiPropertyOptional()
+  @IsOptional()
   @IsString()
-  suggestion_topic ?: string
-  
+  suggestion_date?: string;
+
   @ApiPropertyOptional()
+  @IsOptional()
   @IsString()
-  suggestion_date ?: string 
-  
-  @ApiPropertyOptional()
-  @IsString()
-  suggestion_value ?: string
-
-
-
-
+  suggestion_value?: string;
 }
 
 export default class ReadSuggestionInput {
