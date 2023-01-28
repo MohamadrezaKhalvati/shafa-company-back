@@ -1,7 +1,7 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { ComplicationsService } from './complications.service';
-import CreateComplicationsInput from './dto/creat-complications.input';
+import CreateComplicationsInput from './dto/create-complications.input';
 import ReadComplicationsDataInput from './dto/read-complications.input';
 
 @Controller('complications')
@@ -16,7 +16,7 @@ export class ComplicationsController {
     return await this.complicationsService.readComplications(input);
   }
 
-  @Post('creatcomplications')
+  @Post('createcomplications')
   @ApiOperation({ operationId: 'creatcomplications' })
   @ApiBody({ type: CreateComplicationsInput })
   @ApiResponse({ status: 200 })

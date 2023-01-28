@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { createPaginationResult } from 'src/common/input/pagination.input';
 import { PrismaService } from '../prisma/prisma.service';
-import CreateComplicationsInput from './dto/creat-complications.input';
+import CreateComplicationsInput from './dto/create-complications.input';
 import ReadComplicationsDataInput from './dto/read-complications.input';
 
 @Injectable()

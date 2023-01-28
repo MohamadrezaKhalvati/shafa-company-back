@@ -20,21 +20,24 @@ export class CompanyService {
       PharmaceuticalCompany_established_year:
         rawWhere.pharmaceuticalCompany_established_year,
     };
+
     const count = this.prisma.pharmaceuticalcompany.count({
       where: whereClause,
     });
+
     const entity = this.prisma.pharmaceuticalcompany.findMany({
       where: whereClause,
       ...input?.sortBy?.convertToPrismaFilter(),
       ...input?.pagination?.convertToPrismaFilter(),
     });
-    return createPaginationResult({ count, entity });
+
+    return await createPaginationResult({ count, entity });
   }
 
   async creatCompany(input: CreatCompanyInput) {
     const { data } = input;
 
-    const company = this.prisma.pharmaceuticalcompany.create({
+    const company = await this.prisma.pharmaceuticalcompany.create({
       data: {
         PharmaceuticalCompany_name: data.pharmaceuticalCompany_name,
         PharmaceuticalCompany_country: data.pharmaceuticalCompany_country,
@@ -43,6 +46,8 @@ export class CompanyService {
         PharmaceuticalCompany_location: data.pharmaceuticalCompany_locadtion,
       },
     });
+    console.log(company);
+
     return company;
   }
 }

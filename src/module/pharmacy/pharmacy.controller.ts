@@ -16,7 +16,7 @@ export class PharmacyController {
     return await this.pharmacyService.readPharmacy(input);
   }
 
-  @Post('creatPharmacy')
+  @Post('createPharmacy')
   @ApiOperation({ operationId: 'creatPharmacy' })
   @ApiBody({ type: CreatPharmacyInput })
   @ApiResponse({ status: 200 })

@@ -1,11 +1,6 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import {
-  IsDateString,
-  IsOptional,
-  IsString,
-  ValidateNested,
-} from 'class-validator';
+import { IsDateString, IsString, ValidateNested } from 'class-validator';
 
 class CreatCompanyData {
   @ApiProperty()
