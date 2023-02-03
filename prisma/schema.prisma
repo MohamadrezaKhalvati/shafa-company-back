@@ -1,0 +1,323 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model complications {
+  id_complications                            Int                                           @id @unique(map: "id_complications_UNIQUE") @default(autoincrement())
+  complications_disease_name                  String                                        @db.VarChar(128)
+  complications_duration                      DateTime?                                     @db.Date
+  id_pharmaceuticalcompany                    Int?
+  complicattions_pharmaceuticalcompany_status complicattions_pharmaceuticalcompany_status[]
+  medicine_have_complications_by_pharamcy     medicine_have_complications_by_pharamcy[]     @ignore
+  patient_have_complications                  patient_have_complications[]
+
+  @@index([id_pharmaceuticalcompany], map: "id_pharmaceuticalcompany_idx")
+}
+
+model complicattions_pharmaceuticalcompany_status {
+  id_pharmaceuticalcompany Int                                                @default(autoincrement())
+  id_complications         Int
+  status                   complicattions_pharmaceuticalcompany_status_status
+  complications            complications                                      @relation(fields: [id_complications], references: [id_complications], onDelete: NoAction, onUpdate: NoAction, map: "complicattions_pharmace_fk")
+  pharmaceuticalcompany    pharmaceuticalcompany                              @relation(fields: [id_pharmaceuticalcompany], references: [id_PharmaceuticalCompany], onDelete: Cascade, map: "id_phara_com")
+
+  @@id([id_pharmaceuticalcompany, id_complications])
+  @@index([id_complications], map: "id_com_phar_idx")
+}
+
+model device {
+  id_Device                Int                    @id @unique(map: "id_Device_UNIQUE") @default(autoincrement())
+  device_price             Decimal?               @db.Decimal(45, 0)
+  device_name              String                 @db.VarChar(45)
+  device_model             String                 @unique(map: "device_model_UNIQUE") @db.VarChar(255)
+  device_production_date   DateTime?              @db.Date
+  device_type              String?                @db.VarChar(45)
+  device_Producing_country String?                @db.VarChar(45)
+  device_efficiency        Int
+  device_warranty          DateTime?              @db.Date
+  id_pharmaceuticalcompany Int?
+  pharmaceuticalcompany    pharmaceuticalcompany? @relation(fields: [id_pharmaceuticalcompany], references: [id_PharmaceuticalCompany], onDelete: Cascade, map: "id_dphar")
+
+  @@index([id_pharmaceuticalcompany], map: "id_dphar_idx")
+  @@index([id_pharmaceuticalcompany], map: "id_dphara_idx")
+}
+
+model employee {
+  id_employee                          Int                                   @id @unique(map: "id_employee_UNIQUE") @default(autoincrement())
+  employe_name                         String                                @db.VarChar(255)
+  employee_last_name                   String                                @db.VarChar(255)
+  empolyee_gender                      String                                @db.VarChar(1)
+  empolye_experience                   Int
+  employee_salary                      Decimal                               @db.Decimal(50, 0)
+  employee_birthday                    DateTime                              @db.Date
+  employee_age                         Int
+  employee_works_pharmaceuticalcompany employee_works_pharmaceuticalcompany?
+}
+
+model employee_works_pharmaceuticalcompany {
+  id_employee              Int                   @unique(map: "id_employee_UNIQUE")
+  id_pharmaceuticalcompany Int                   @unique(map: "id_pharmaceuticalcompany_UNIQUE")
+  duty                     String                @db.VarChar(255)
+  pharmaceuticalcompany    pharmaceuticalcompany @relation(fields: [id_pharmaceuticalcompany], references: [id_PharmaceuticalCompany], onDelete: NoAction, onUpdate: NoAction, map: "employee_works_pharmaceuticalcompany_PharmaceuticalCompany_fk")
+  employee                 employee              @relation(fields: [id_employee], references: [id_employee], onDelete: NoAction, onUpdate: NoAction, map: "employee_works_pharmaceuticalcompany_employee__")
+
+  @@index([id_pharmaceuticalcompany], map: "id_epara_idx")
+  @@index([id_pharmaceuticalcompany], map: "id_ephar_idx")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model logsofdatabase {
+  id          Int
+  delete_date DateTime? @db.Date
+  deleted_by  String?   @db.VarChar(64)
+  type        String?   @db.VarChar(64)
+
+  @@ignore
+}
+
+model medicine {
+  id_medicine                               Int                                         @id @unique(map: "id_medicine_UNIQUE") @default(autoincrement())
+  medicine_name                             String                                      @unique(map: "medicine_name_UNIQUE") @db.VarChar(255)
+  medicine_adminstration                    String                                      @db.MediumText
+  medicine_production_data                  DateTime?                                   @db.Date
+  medicine_expiry_date                      DateTime?                                   @db.Date
+  medicine_age_limit                        String                                      @db.VarChar(45)
+  id_company                                Int?
+  pharmaceuticalcompany                     pharmaceuticalcompany?                      @relation(fields: [id_company], references: [id_PharmaceuticalCompany], onDelete: NoAction, onUpdate: NoAction, map: "id_pharmcom")
+  medicine_content                          medicine_content[]
+  medicine_have_complications_by_pharamcy   medicine_have_complications_by_pharamcy[]   @ignore
+  medicine_production_pharmaceuticalcompany medicine_production_pharmaceuticalcompany[]
+  order_medicine                            order_medicine[]
+  pharmacy_medicine                         pharmacy_medicine[]
+  suggestions_about_medicine                suggestions_about_medicine[]
+
+  @@index([id_company], map: "id_pharmcom_idx")
+}
+
+model medicine_content {
+  value       String    @db.MediumText
+  id_medicene Int?
+  pk_id       Int       @id
+  medicine    medicine? @relation(fields: [id_medicene], references: [id_medicine], onDelete: Cascade, onUpdate: NoAction, map: "id_medicine")
+
+  @@index([id_medicene], map: "id_medicine_idx")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model medicine_have_complications_by_pharamcy {
+  id_medicine     Int
+  id_complication Int
+  id_pharmacy     Int
+  complications   complications @relation(fields: [id_complication], references: [id_complications], onDelete: NoAction, onUpdate: NoAction, map: "comfk")
+  medicine        medicine      @relation(fields: [id_medicine], references: [id_medicine], onDelete: NoAction, onUpdate: NoAction, map: "medfk")
+  pharmacy        pharmacy      @relation(fields: [id_pharmacy], references: [id_pharmacy], onDelete: NoAction, onUpdate: NoAction, map: "pharfk")
+
+  @@index([id_complication], map: "comfk_idx")
+  @@index([id_medicine], map: "medfk_idx")
+  @@index([id_pharmacy], map: "pharfk_idx")
+  @@ignore
+}
+
+model medicine_production_pharmaceuticalcompany {
+  id_medicine                 Int
+  id_pharmaceuticalcompanycol Int
+  date                        DateTime              @db.Date
+  medicine                    medicine              @relation(fields: [id_medicine], references: [id_medicine], onDelete: Cascade, map: "id_medicine_fk")
+  pharmaceuticalcompany       pharmaceuticalcompany @relation(fields: [id_pharmaceuticalcompanycol], references: [id_PharmaceuticalCompany], onDelete: NoAction, onUpdate: NoAction, map: "medicine_production_pharmaceuticalcompanicalCompany_fk")
+
+  @@id([id_medicine, id_pharmaceuticalcompanycol])
+  @@index([id_pharmaceuticalcompanycol], map: "medicine_production_pharmaceuticalcompanicalCompany_fk")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model medicine_side_effect {
+  value_side_effect       String                         @db.VarChar(128)
+  id_medicine_side_effect Int
+  severity                medicine_side_effect_severity?
+
+  @@index([id_medicine_side_effect], map: "id_medicine_fk_sf_idx")
+  @@index([severity], map: "medicine_side_effect_severity_id_fk")
+  @@ignore
+}
+
+model order {
+  id_order            Int              @id @unique(map: "id_order_UNIQUE") @default(autoincrement())
+  order_date          DateTime         @db.Date
+  order_price         Decimal          @db.Decimal(64, 0)
+  order_buyer         String           @db.VarChar(64)
+  order_tracking_code Int              @unique(map: "order_tracking_code_UNIQUE")
+  order_medicine      order_medicine[]
+  payment             payment[]
+}
+
+model order_medicine {
+  id_order    Int
+  id_medicene Int
+  amount      Int
+  order       order    @relation(fields: [id_order], references: [id_order], onDelete: Cascade, map: "id_order_medicine")
+  medicine    medicine @relation(fields: [id_medicene], references: [id_medicine], onDelete: Cascade, map: "order_medicine_medicine_id_medicine_fk")
+
+  @@id([id_order, id_medicene])
+  @@index([id_medicene], map: "id_medicine_order_idx")
+}
+
+model patient {
+  id_patient                 Int                          @id @unique(map: "id_patient_UNIQUE") @default(autoincrement())
+  patient_name               String                       @db.VarChar(64)
+  patient_last_name          String                       @db.VarChar(64)
+  patient_gender             String                       @db.VarChar(1)
+  patient_age                Int
+  patient_phone_number       String                       @db.VarChar(11)
+  patient_identification_id  String                       @unique(map: "patient_identification_id_UNIQUE") @db.VarChar(64)
+  patient_blood_type         String                       @db.VarChar(4)
+  patient_birthday           DateTime                     @db.Date
+  patient_disease_background patient_disease_background[] @ignore
+  patient_have_complications patient_have_complications[]
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model patient_disease_background {
+  value      String  @db.MediumText
+  id_patient Int
+  patient    patient @relation(fields: [id_patient], references: [id_patient], onDelete: NoAction, onUpdate: NoAction, map: "patient_disease_background_patient_id_patient_fk")
+
+  @@index([id_patient], map: "patient_disease_background_patient_id_patient_fk")
+  @@ignore
+}
+
+model patient_have_complications {
+  id_complications Int
+  id_patient       Int
+  complications    complications @relation(fields: [id_complications], references: [id_complications], onDelete: NoAction, onUpdate: NoAction, map: "patient_have_complications_complications_id_complications_fk")
+  patient          patient       @relation(fields: [id_patient], references: [id_patient], onDelete: Cascade, map: "patient_have_complications_patient_id_patient_fk")
+
+  @@id([id_complications, id_patient])
+  @@index([id_patient], map: "id_patient_have_idx")
+}
+
+model payment {
+  id_payment          Int            @id @unique(map: "id_payment_UNIQUE") @default(autoincrement())
+  payment_total_price Decimal        @db.Decimal(64, 0)
+  payment_data        DateTime       @db.Date
+  id_payment_order    Int
+  status              payment_status
+  order               order          @relation(fields: [id_payment_order], references: [id_order], onDelete: Cascade, map: "id_paymentorder_fk")
+
+  @@index([id_payment_order], map: "id_payment_order_idx")
+}
+
+model pharmaceuticalcompany {
+  id_PharmaceuticalCompany                    Int                                           @id @unique(map: "id_PharmaceuticalCompany_UNIQUE") @default(autoincrement())
+  PharmaceuticalCompany_name                  String                                        @db.VarChar(64)
+  PharmaceuticalCompany_established_year      DateTime                                      @db.Date
+  PharmaceuticalCompany_location              String                                        @db.VarChar(64)
+  PharmaceuticalCompany_country               String                                        @db.VarChar(64)
+  complicattions_pharmaceuticalcompany_status complicattions_pharmaceuticalcompany_status[]
+  device                                      device[]
+  employee_works_pharmaceuticalcompany        employee_works_pharmaceuticalcompany?
+  medicine                                    medicine[]
+  medicine_production_pharmaceuticalcompany   medicine_production_pharmaceuticalcompany[]
+  suggestion_pharmaceuticalcompany_answers    suggestion_pharmaceuticalcompany_answers[]
+  transportation                              transportation[]
+}
+
+model pharmacy {
+  id_pharmacy                             Int                                       @id @unique(map: "id_pharmacy_UNIQUE") @default(autoincrement())
+  pharmacy_name                           String                                    @db.VarChar(64)
+  pharmacy_established_year               DateTime                                  @db.Date
+  pharmacy_address                        String                                    @db.VarChar(128)
+  pharmacy_branch                         String?                                   @db.VarChar(45)
+  pharmacy_phone_number                   String?                                   @db.VarChar(11)
+  medicine_have_complications_by_pharamcy medicine_have_complications_by_pharamcy[] @ignore
+  pharmacy_medicine                       pharmacy_medicine[]
+  pharmacy_supervisor_dr                  pharmacy_supervisor_dr[]
+  suggestions                             suggestions[]
+}
+
+model pharmacy_medicine {
+  id_pharmacy Int      @default(autoincrement())
+  id_medicine Int
+  pharmacy    pharmacy @relation(fields: [id_pharmacy], references: [id_pharmacy], onDelete: Cascade, map: "id_pharmacy_me")
+  medicine    medicine @relation(fields: [id_medicine], references: [id_medicine], onDelete: Cascade, map: "pharmacy_medicine_medicine_id_medicine_fk")
+
+  @@id([id_pharmacy, id_medicine])
+  @@index([id_medicine], map: "id_medicine_pharmacy_idx")
+}
+
+model pharmacy_supervisor_dr {
+  supervisor_dr_hc_id     Int      @unique(map: "id_supervisor_dr_UNIQUE")
+  id_pharmacy             Int
+  supervisor_dr_firstname String   @db.VarChar(255)
+  supervisor_dr_lastname  String   @db.VarChar(255)
+  pharmacy                pharmacy @relation(fields: [id_pharmacy], references: [id_pharmacy], onDelete: Cascade, map: "id_phar_super")
+
+  @@id([supervisor_dr_hc_id, id_pharmacy])
+  @@index([id_pharmacy], map: "id_phar_super_idx")
+}
+
+model suggestion_pharmaceuticalcompany_answers {
+  id_suggestion            Int
+  id_pharmaceuticalcompamy Int
+  answer                   String                @db.LongText
+  pharmaceuticalcompany    pharmaceuticalcompany @relation(fields: [id_pharmaceuticalcompamy], references: [id_PharmaceuticalCompany], onDelete: Cascade, map: "id_sphara")
+
+  @@id([id_suggestion, id_pharmaceuticalcompamy])
+  @@index([id_pharmaceuticalcompamy], map: "id_sphara_idx")
+}
+
+model suggestions {
+  id_suggestions             Int                          @id @unique(map: "id_suggestions_UNIQUE") @default(autoincrement())
+  suggestions_topic          String                       @db.VarChar(64)
+  suggestions_date           DateTime                     @db.Date
+  id_pharmacy                Int?
+  suggestion_value           String                       @db.LongText
+  pharmacy                   pharmacy?                    @relation(fields: [id_pharmacy], references: [id_pharmacy], onUpdate: SetNull, map: "id_sphar")
+  suggestions_about_medicine suggestions_about_medicine[]
+
+  @@index([id_pharmacy], map: "id_sphar_idx")
+}
+
+model suggestions_about_medicine {
+  id_medicine    Int         @default(autoincrement())
+  id_suggestions Int
+  medicine       medicine    @relation(fields: [id_medicine], references: [id_medicine], onDelete: NoAction, onUpdate: NoAction, map: "suggestions_about_medicine_medicine_id_medicine_fk")
+  suggestions    suggestions @relation(fields: [id_suggestions], references: [id_suggestions], onDelete: NoAction, onUpdate: NoAction, map: "suggestions_about_medicine_suggestions_id_suggestions_fk")
+
+  @@id([id_medicine, id_suggestions])
+  @@index([id_suggestions], map: "id_suggestion_medicine_idx")
+}
+
+model transportation {
+  id_transportation             Int                    @id @unique(map: "id_transportation_UNIQUE") @default(autoincrement())
+  transportation_sending_date   DateTime               @db.Date
+  transportation_direction      String                 @db.Text
+  transportation_receiving_date DateTime               @db.Date
+  transportaion_origin          String                 @db.VarChar(255)
+  transportaion_destination     String                 @db.VarChar(255)
+  transportation_vehicle        String?                @db.VarChar(255)
+  id_pharmaceuticalcompany      Int?
+  pharmaceuticalcompany         pharmaceuticalcompany? @relation(fields: [id_pharmaceuticalcompany], references: [id_PharmaceuticalCompany], onDelete: Cascade, map: "id_tphara")
+
+  @@index([id_pharmaceuticalcompany], map: "id_tphara_idx")
+}
+
+enum complicattions_pharmaceuticalcompany_status_status {
+  checked
+  notchecked
+}
+
+enum medicine_side_effect_severity {
+  low
+  medium
+  high
+}
+
+enum payment_status {
+  pays_off     @map("pays off")
+  not_pays_off @map("not pays off")
+}
